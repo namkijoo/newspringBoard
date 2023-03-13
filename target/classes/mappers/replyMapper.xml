@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.board.replyMapper">
+	<select id="replyList" parameterType="int" resultType="com.spring.board.dto.ReplyVO">
+		select 
+			rno,bno,writer,content,regDate
+		from test.tbi_reply
+			where bno=#{bno}
+	</select>
+	
+	<insert id="replyWrite" parameterType="com.spring.board.dto.ReplyVO">
+		insert 
+			into test.tbi_reply(bno,writer,content,regDate)
+			value(#{bno},#{writer},#{content},now())
+	</insert>
+	
+	<update id="replyModify" parameterType="com.spring.board.dto.ReplyVO">
+		update test.tbi_reply set
+			writer = #{writer},
+			content = #{content}
+		where rno = #{rno}
+			and bno = #{bno}
+	</update>
+	
+	<delete id="replyDelete" parameterType="com.spring.board.dto.ReplyVO">
+		delete from test.tbi_reply
+		where rno=#{rno} and bno=#{bno}
+	</delete>
+	
+	<select id="replySelect" parameterType="com.spring.board.dto.ReplyVO" resultType="com.spring.board.dto.ReplyVO">
+		select
+			rno,bno,writer,content,regDate
+		from test.tbi_reply
+			where bno=#{bno} and rno=${rno}
+	</select>
+	
+	
+</mapper>

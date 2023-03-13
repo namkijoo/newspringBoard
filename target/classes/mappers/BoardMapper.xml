@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.board.BoardMapper">
+	
+	<select id="boardList" resultType="com.spring.board.dto.boardVO">
+		select*from test.new_table;
+	</select>
+	
+	
+	<insert id="boardWrite" parameterType="com.spring.board.dto.boardVO">
+		INSERT 
+          INTO test.new_table 
+             (
+                  name
+                  ,title
+                  ,time
+                  ,date
+                  ,bo_no
+                  ,content
+              ) 
+        VALUES 
+             (
+                #{name}
+                , #{title}
+                , NOW()
+                , NOW() 
+                , 0
+                ,#{content}
+              )
+	</insert>
+	
+	
+	<select id="boardDetail" resultType="com.spring.board.dto.boardVO">
+		select name,title,time,date,bo_no,content
+		from test.new_table where bo_no = #{bo_no}
+	</select>
+	
+	<delete id="boardDelete">
+    	delete from test.new_table
+    	where bo_no=#{bo_no}
+    </delete>
+    
+    <update id="boardUpdate" parameterType="com.spring.board.dto.boardVO">
+    
+        UPDATE test.new_table 
+           SET title = #{title}
+             , content= #{content}
+             , name = #{name}
+             , date = NOW()
+             ,time=NOW()
+         WHERE bo_no = #{bo_no}
+    </update>
+</mapper>
