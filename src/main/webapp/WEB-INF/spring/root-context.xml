@@ -19,5 +19,9 @@
         <property name="username" value="root" />
         <property name="password" value="1234" />
     </bean>
-    
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+
+    <property name="validationMessageSource" ref="messageSource" />
+
+</bean>
 </beans>

@@ -1,5 +1,10 @@
 package com.spring.board.service;
 
+
+
+
+
+
 import com.spring.board.dto.memberVO;
 
 public interface memberService {
@@ -11,4 +16,5 @@ public interface memberService {
 	
 	//아이디 중복체크
 	public int idCheck(String userId) throws Exception;
+	
 }

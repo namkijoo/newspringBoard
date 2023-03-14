@@ -1,5 +1,9 @@
 package com.spring.board.service;
 
+
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +31,6 @@ public class memberServiceImpl implements memberService {
 	public int idCheck(String userId) throws Exception{
 		return dao.idCheck(userId);
 	}
+	
+	
 }

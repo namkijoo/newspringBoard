@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>register</title>
@@ -11,7 +11,26 @@
 		location.href="/";
 	}
 
+	function pwCheck(pw){
+		$.ajax({
+			type:"POST",
+			url: "/pwCheck",
+			data : { pw: pw },
+			success:function(result){	
+				if(result == true){				
+					pwCheckF.innerHTML = "유효성 체크 문제 없음"; 				
+				}else{				
+					pwCheckF.innerHTML = "유효성 체크 범위 벗어남"; 
+				}
+			},
+	    	error:function(request,status){
+	    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    	}
+		});	
+		
+	}
 
+	
 	function checkId(){
 		var userId = $('#userId').val();
 		$.ajax({
@@ -49,11 +68,8 @@
 		</div>
 		<div>
 			<label>패스워드</label>
-			<input type="text" id="userPass" name="userPass">
-		</div>
-		<div>
-			<label>성명</label>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="userName" name="userName">
+			<input type="text" id="userPass" name="userPass" oninput="pwCheck(userPass.value)">
+			<p id="pwCheckF"></p>
 		</div>
 		<br>
 		<div>

@@ -1,5 +1,8 @@
 package com.spring.board.dao;
 
+
+
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -31,4 +34,5 @@ public class memberDAOImpl implements memberDAO {
 	public int idCheck(String userId) throws DataAccessException{
 		return sqlSession.selectOne(namespace+".idCheck",userId);
 	}
+	
 }

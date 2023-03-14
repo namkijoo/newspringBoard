@@ -44,5 +44,7 @@
             <beans:bean id="Intercepter" class="com.spring.board.intercepter.Intercepter"></beans:bean>
         </mvc:interceptor>
     </mvc:interceptors>
+    
+    <annotation-driven validator="validator"/>
 	
 </beans:beans>

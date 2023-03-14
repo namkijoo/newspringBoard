@@ -1,9 +1,15 @@
 package com.spring.board.controller;
 
-import java.util.Locale;
+
+
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +17,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.spring.board.dto.memberVO;
 import com.spring.board.intercepter.LoggerInterceptor;
 import com.spring.board.service.memberService;
+
 
 @Controller
 @Service
@@ -46,11 +62,14 @@ public class memberController {
 	
 	//로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(memberVO vo, HttpServletRequest req) throws Exception{
+	public String login(memberVO vo, HttpServletRequest req,Model model) throws Exception{
 		logger.info("post login");
 		
+		
+		System.out.println("아이디============================"+vo.getUserId());
+		
 		memberVO login = service.login(vo);
-		System.out.println("ddddddddddddddddddddddddddddddddddddddddddd"+login.getUserName());
+		
 		
 		if(login == null) {
 			return "redirect:/";
@@ -58,13 +77,15 @@ public class memberController {
 		}else {
 			HttpSession session = req.getSession();
 			session.setAttribute("member", login);
+			session.setAttribute("name",vo.getUserId());
 			return "redirect:/boardList";
-		}	
+		}
 	}
 	
 
 	@RequestMapping(value = "/", produces="text/plain;charset=UTF-8")
-    public String home() {
+    public String home() throws Exception {
+		
 		logger.debug("==== login 화면====");
 		return "user/login";
 	}
@@ -90,4 +111,27 @@ public class memberController {
 		int cnt = service.idCheck(userId);
 		return cnt;
 	}
+	
+	
+	@RequestMapping(value = "/pwCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean PwCheck(String pw) {		
+		logger.info("PwCheck");		
+		
+		boolean check = false;	
+
+		String pw_chk = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*?&`~'\\\"+=])[A-Za-z[0-9]$@$!%*?&`~'\\\"+=]{6,18}$";
+				
+		Pattern pattern_symbol = Pattern.compile(pw_chk);		
+		Matcher matcher_symbol = pattern_symbol.matcher(pw);		
+		
+		if(matcher_symbol.find()) {	
+			check = true;
+		}		
+		return check;
+	}
+
+	
+	
+	
 }

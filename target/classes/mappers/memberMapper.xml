@@ -6,13 +6,12 @@
 	<insert id="register">
 		insert into test.member(
 			userId,
-			userPass,
-			userName
+			userPass
 		)
 		values(
 			#{userId},
-			#{userPass},
-			#{userName}
+			#{userPass}
+			
 		)
 		
 	</insert>
@@ -21,11 +20,13 @@
 		select userId, userPass
 			from test.member
 		where userId=#{userId}
-		and userPass=#{userPass}
+		and userPass=#{userPass} 
 	</select>
 	
 	<select id="idCheck" resultType="Integer" parameterType="String">
 		select count(userId) from test.member
 		where userId=#{userId}
 	</select>
+	
+
 </mapper>

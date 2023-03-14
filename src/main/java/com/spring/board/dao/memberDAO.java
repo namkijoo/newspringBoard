@@ -1,5 +1,6 @@
 package com.spring.board.dao;
 
+
 import org.springframework.dao.DataAccessException;
 
 import com.spring.board.dto.memberVO;
@@ -13,4 +14,5 @@ public interface memberDAO {
 	
 	//아이디 중복체크
 	public int idCheck(String userId) throws DataAccessException;
+	
 }

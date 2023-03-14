@@ -28,9 +28,8 @@
 </head>
 <body>
 <form method="post" id="insert_data" name="form">
-	제목: &nbsp;&nbsp;&nbsp;&nbsp; <input name="title" type="text" id="title"><br>
-	작성자 : &nbsp; <input name="name" type="text" id="name"><br>
-	내용 : &nbsp;&nbsp;&nbsp;&nbsp; <textarea rows="5" cols="50" name="content" id="content"></textarea> 
+	제목: &nbsp;&nbsp;&nbsp; <input name="title" type="text" id="title"><br><input name="name" type="text" id="name" value=${name} readonly style="display:none">
+	내용 : &nbsp;&nbsp;&nbsp; <textarea rows="5" cols="50" name="content" id="content"></textarea> 
 	
 </form>
  <button type="button" onclick="javascript:goBoardList()">목록으로 돌아가기</button>

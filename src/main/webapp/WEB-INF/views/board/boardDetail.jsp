@@ -70,6 +70,7 @@
 			<button type="submit">댓글 작성</button>
 		</p>
 	</form>
+	
 </div>
 </body>
 </html>
