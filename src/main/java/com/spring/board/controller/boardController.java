@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.board.dto.ReplyVO;
 import com.spring.board.dto.boardVO;
+import com.spring.board.dto.memberVO;
 import com.spring.board.service.ReplyService;
 import com.spring.board.service.boardService;
 
@@ -54,7 +55,6 @@ public class boardController {
 		List<ReplyVO> reply = null;
 		reply = replyService.list(bo_no);
 		model.addAttribute("reply",reply);
-		
 		return "board/boardDetail";
 	}
 	

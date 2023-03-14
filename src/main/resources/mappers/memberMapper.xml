@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.spring.board.memberMapper">
+	<insert id="register">
+		insert into test.member(
+			userId,
+			userPass,
+			userName
+		)
+		values(
+			#{userId},
+			#{userPass},
+			#{userName}
+		)
+		
+	</insert>
+	
+	<select id="login" resultType="com.spring.board.dto.memberVO">
+		select userId, userPass
+			from test.member
+		where userId=#{userId}
+		and userPass=#{userPass}
+	</select>
+	
+	<select id="idCheck" resultType="Integer" parameterType="String">
+		select count(userId) from test.member
+		where userId=#{userId}
+	</select>
+</mapper>

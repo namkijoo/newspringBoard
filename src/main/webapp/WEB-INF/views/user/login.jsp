@@ -5,14 +5,19 @@
  function logout(){
 	 location.href = "logout"
  }
+ 
+ function register(){
+	 location.href="register"
+ }
 </script>
 <body>
  Login Page
- <form action="loginCheck" id="loginCheck">
- 	<input type="text" id="id" name="id" value="admin">
- 	<input type="text" id="pwd" name="pwd" value="welcome1">
- 	<input type="submit" value="submit">
+ <form action="/login" id="loginCheck" method="post">
+ 	<input type="text" name="userId" >
+ 	<input type="text" name="userPass">
+ 	<input type="submit" value="login">
  	<button type="button" onclick="javascript:logout();">logout</button>
+ 	<button type="button" onclick="javascript:register();">register</button>
  </form>
 </body>
 </html>

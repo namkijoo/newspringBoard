@@ -19,7 +19,7 @@ public class boardDAOImpl implements boardDAO {
 	//게시판리스트
 	@Override
 	public List<boardVO> list() throws Exception {
-		return sqlSession.selectList(namespace+" .boardList");
+		return sqlSession.selectList(namespace+".boardList");
 	}
 	
 	//게시판 작성

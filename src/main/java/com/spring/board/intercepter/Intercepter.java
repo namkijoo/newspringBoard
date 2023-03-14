@@ -17,7 +17,7 @@ public class Intercepter extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
 		
 		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("logininfo");
+		Object obj = session.getAttribute("member");
 		 logger.debug("==================== 로그인 안했으면 다시 돌아가 ====================");
 		if(obj==null) {
 			response.sendRedirect("/");

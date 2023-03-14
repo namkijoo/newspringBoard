@@ -49,7 +49,9 @@ function logout(){
 	</table>
 	<button type="button" onclick="javascript:goBoardWrite()">작성</button>
 	<button type="button" onclick="javascript:logout();">logout</button>
-
+	<%
+		
+	%>
 </body>
 
 </html>
