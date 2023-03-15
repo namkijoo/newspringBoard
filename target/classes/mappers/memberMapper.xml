@@ -28,5 +28,15 @@
 		where userId=#{userId}
 	</select>
 	
-
+	<update id="userModify" parameterType="com.spring.board.dto.memberVO">
+		update test.member
+		 set userPass=#{userPass}
+		 where userId=#{userId}
+	</update>
+	
+	<delete id="userDelete">
+		delete from test.member
+		where userId=#{userId}
+		
+	</delete>
 </mapper>

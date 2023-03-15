@@ -35,4 +35,14 @@ public class memberDAOImpl implements memberDAO {
 		return sqlSession.selectOne(namespace+".idCheck",userId);
 	}
 	
+	//회원정보 수정
+	@Override
+	public void userModify(memberVO vo) throws Exception{
+		sqlSession.update(namespace+".userModify",vo);
+	}
+	
+	//회원탈퇴
+	public void userDelete(memberVO vo) throws Exception{
+		sqlSession.delete(namespace+".userDelete",vo);
+	}
 }

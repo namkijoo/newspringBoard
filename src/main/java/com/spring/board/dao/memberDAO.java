@@ -15,4 +15,9 @@ public interface memberDAO {
 	//아이디 중복체크
 	public int idCheck(String userId) throws DataAccessException;
 	
+	//회원정보 수정
+	public void userModify(memberVO vo) throws Exception;
+	
+	//회원탈퇴
+	public void userDelete(memberVO vo) throws Exception;
 }

@@ -29,6 +29,17 @@
 		});	
 		
 	}
+	
+	function pwcheck(pw){
+		var regexPw=/^(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{8,20}$/;
+		if(!regexPw.test(pw)){
+			pwCheckF.innerHTML = "유효성 체크 범위 벗어남"; 
+			
+		}
+		else{
+			pwCheckF.innerHTML = "유효성 체크 문제 없음"; 
+		}
+	}
 
 	
 	function checkId(){
@@ -68,7 +79,7 @@
 		</div>
 		<div>
 			<label>패스워드</label>
-			<input type="text" id="userPass" name="userPass" oninput="pwCheck(userPass.value)">
+			<input type="text" id="userPass" name="userPass" oninput="pwcheck(userPass.value)">
 			<p id="pwCheckF"></p>
 		</div>
 		<br>

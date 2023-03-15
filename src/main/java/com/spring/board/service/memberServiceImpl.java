@@ -32,5 +32,13 @@ public class memberServiceImpl implements memberService {
 		return dao.idCheck(userId);
 	}
 	
+	public void userModify(memberVO vo) throws Exception{
+		dao.userModify(vo);
+	};
+	
+	//회원탈퇴
+	public void userDelete(memberVO vo) throws Exception{
+		 dao.userDelete(vo);
+	}
 	
 }

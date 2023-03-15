@@ -21,6 +21,14 @@ function goBoardWrite(){
 function logout(){
 	 location.href = "logout"; 
 }
+
+function modify(){
+	location.href="user/modify";
+}
+
+function userdelete(){
+	location.href="user/delete";
+}
 </script>
 
 
@@ -47,9 +55,11 @@ function logout(){
 		</tr>
 		</c:forEach>
 	</table>
-	<button type="button" onclick="javascript:goBoardWrite()">작성</button>
-	<button type="button" onclick="javascript:logout();">logout</button>
-
+	<br>
+	<button type="button" onclick="goBoardWrite()">작성</button>
+	<button type="button" onclick="logout()">logout</button>
+	<button type="button" onclick="modify()">회원정보 수정</button>
+	<button type="button" onclick="userdelete()">회원탈퇴</button>
 </body>
 
 </html>

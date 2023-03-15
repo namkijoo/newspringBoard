@@ -41,6 +41,7 @@
             <mvc:mapping path="/boardDelete/**"/>
             <mvc:mapping path="/boardWrite"/>
             <mvc:mapping path="/reply/**/"/>
+            <mvc:mapping path="/user/**/"/>
             <beans:bean id="Intercepter" class="com.spring.board.intercepter.Intercepter"></beans:bean>
         </mvc:interceptor>
     </mvc:interceptors>

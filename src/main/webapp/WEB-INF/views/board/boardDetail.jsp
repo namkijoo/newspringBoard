@@ -60,7 +60,7 @@
 <div>
 	<form method="post" action="/reply/write">
 		<p>
-			<label>댓글 작성자</label> <input type="text" name="writer">
+			<label>댓글 작성자</label> <input type="text" name="writer" value="${name}" Readonly>
 		</p>
 		<p>
 			<textarea rows="5" cols="50" name="content"></textarea>
