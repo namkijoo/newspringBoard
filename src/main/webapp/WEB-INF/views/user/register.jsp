@@ -30,15 +30,31 @@
 		
 	}
 	
+	
+	
+	
 	function pwcheck(pw){
 		var regexPw=/^(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{8,20}$/;
 		if(!regexPw.test(pw)){
 			pwCheckF.innerHTML = "유효성 체크 범위 벗어남"; 
-			
+			$('#pwCheckF').css("color","red")
+	
 		}
 		else{
-			pwCheckF.innerHTML = "유효성 체크 문제 없음"; 
+			pwCheckF.innerHTML = "유효성 체크 문제 없음";
+			$('#pwCheckF').css("color","blue")
+
 		}
+	}
+	
+	function nullCheck(userId,userPass){
+		if(userId==""){
+			alert("아이디를 입력해주세요");
+		}
+		if(userPass==""){
+			alert("패스워드를 입력해주세요");
+		}
+
 	}
 
 	
@@ -52,11 +68,13 @@
 				if(cnt==0){
 					$('.id_ok').css("display","inline-block");
 					$('.id_already').css("display","none");
+					$('#userPass').removeAttr("readonly");
 					$('.submit').removeAttr("disabled");
 				}
 				else{
 					$('.id_already').css("display","inline-block");
 					$('.id_ok').css("display","none");
+					$('#userPass').attr("readonly",true);
 					$('.submit').attr("disabled","disabled");
 					
 				}
@@ -80,11 +98,11 @@
 		<div>
 			<label>패스워드</label>
 			<input type="text" id="userPass" name="userPass" oninput="pwcheck(userPass.value)">
-			<p id="pwCheckF"></p>
+			<span id="pwCheckF"></span>
 		</div>
 		<br>
 		<div>
-			<button type="submit" id="submit" class="submit"  >회원가입</button>
+			<button type="submit" id="submit" class="submit" onclick="nullCheck(userId.value,userPass.value)" >회원가입</button>
 			<button type="button" onclick="back()">취소</button>
 		</div>
 	</form>

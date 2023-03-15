@@ -28,7 +28,7 @@ public class ReplyController {
 	
 	//댓글 수정하기
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String getModify(@RequestParam("bno") Integer bno, @RequestParam("rno") int rno, Model model) throws Exception {
+	public String getModify(@RequestParam("bno") int bno, @RequestParam("rno") int rno, Model model) throws Exception {
 		ReplyVO vo = new ReplyVO();
 		vo.setBno(bno);
 		vo.setRno(rno);

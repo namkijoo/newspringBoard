@@ -25,13 +25,7 @@
 	
 	<context:component-scan base-package="com.spring.board" />
 	
-	
-	<mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/home"/>
-            <beans:bean id="loggerInterceptor" class="com.spring.board.intercepter.LoggerInterceptor"></beans:bean>
-        </mvc:interceptor>
-    </mvc:interceptors>
+
 
 	<mvc:interceptors>
         <mvc:interceptor>

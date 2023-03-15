@@ -12,7 +12,7 @@
 	
 	function addWrite(){
 		var form = document.getElementById("insert_data");
-		var value = document.getElementById("name").value;
+		var value = document.getElementById("title").value;
 		if(value==""){
 			alert("이름을 입력하세요");
 		}
@@ -28,7 +28,8 @@
 </head>
 <body>
 <form method="post" id="insert_data" name="form">
-	제목: &nbsp;&nbsp;&nbsp; <input name="title" type="text" id="title"><br><input name="name" type="text" id="name" value=${name} readonly style="display:none">
+	제목: &nbsp;&nbsp;&nbsp; <input name="title" type="text" id="title">
+	<br><input name="name" type="text" id="name" value=${name} readonly style="display:none">
 	내용 : &nbsp;&nbsp;&nbsp; <textarea rows="5" cols="50" name="content" id="content"></textarea> 
 	
 </form>

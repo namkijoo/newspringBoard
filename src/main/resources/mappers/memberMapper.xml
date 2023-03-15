@@ -23,7 +23,7 @@
 		and userPass=#{userPass} 
 	</select>
 	
-	<select id="idCheck" resultType="Integer" parameterType="String">
+	<select id="idCheck" resultType="Integer">
 		select count(userId) from test.member
 		where userId=#{userId}
 	</select>

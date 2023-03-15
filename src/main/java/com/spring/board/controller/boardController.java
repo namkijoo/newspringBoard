@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.board.dto.ReplyVO;
 import com.spring.board.dto.boardVO;
-import com.spring.board.dto.memberVO;
 import com.spring.board.service.ReplyService;
 import com.spring.board.service.boardService;
 
@@ -30,14 +29,11 @@ public class boardController {
 	
 	//리스트 화면
 	@RequestMapping(value="/boardList", method=RequestMethod.GET)
-	public String board(memberVO meberVO,boardVO boardVO,Model model) throws Exception {
+	public String board(boardVO boardVO,Model model) throws Exception {
 		List<boardVO> list;
 		list = service.list();
-		model.addAttribute("list",list);
-		
-		model.addAttribute("name","d");
-		return "board/boardList";
-		
+		model.addAttribute("list",list);	
+		return "board/boardList";	
 	}
 	
 	//채팅방작성화면
@@ -58,7 +54,7 @@ public class boardController {
 		boardVO data = service.boardDetail(bo_no);
 		model.addAttribute("data",data);
 		
-		List<ReplyVO> reply = null;
+		List<ReplyVO> reply;
 		reply = replyService.list(bo_no);
 		model.addAttribute("reply",reply);
 		return "board/boardDetail";
