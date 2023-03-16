@@ -29,6 +29,12 @@ function modify(){
 function userdelete(){
 	location.href="user/delete";
 }
+
+function search(){
+	let searchType = document.getElementsByName("searchType")[0].value;
+	  let keyword =  document.getElementsByName("keyword")[0].value;
+	  location.href = "/listPage?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+}
 </script>
 
 
@@ -56,11 +62,32 @@ function userdelete(){
 		</c:forEach>
 	</table>
 	<div>
-		<c:forEach begin="1" end="${pageNum}" var="num">
+		<c:if test="${prev}">
+			<span>[<a href="/listPage?num=${startPageNum-1}">이전</a>]</span>
+		</c:if>
+		
+		<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
 			<span>
 				<a href="/listPage?num=${num}">${num}</a>
 			</span>
 		</c:forEach>
+		
+		<c:if test="${next}">
+			<span>[<a href="/listPage?num=${endPageNum+1}">다음</a>]</span>
+		</c:if>
+		
+		<div>
+			<select name="searchType">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="title_content">제목+내용</option>
+				<option value="writer">작성자</option>
+			</select>
+			
+			<input type="text" name="keyword"/>
+			
+			<button type="button" id="searchBtn" onclick="search()">검색</button>
+		</div>
 	</div>
 	<br>
 	<button type="button" onclick="goBoardWrite()">작성</button>

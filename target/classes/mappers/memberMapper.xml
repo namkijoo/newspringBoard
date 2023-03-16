@@ -28,6 +28,11 @@
 		where userId=#{userId}
 	</select>
 	
+	<select id="pwCheck" resultType="String">
+		select userPass from test.member
+		where userId=#{userId}
+	</select>
+	
 	<update id="userModify" parameterType="com.spring.board.dto.memberVO">
 		update test.member
 		 set userPass=#{userPass}
@@ -37,6 +42,6 @@
 	<delete id="userDelete">
 		delete from test.member
 		where userId=#{userId}
-		
 	</delete>
+	
 </mapper>

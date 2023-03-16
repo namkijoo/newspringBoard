@@ -36,6 +36,7 @@
             <mvc:mapping path="/boardWrite"/>
             <mvc:mapping path="/reply/**/"/>
             <mvc:mapping path="/user/**/"/>
+            <mvc:mapping path="/listPage/**/"/>
             <beans:bean id="Intercepter" class="com.spring.board.intercepter.Intercepter"></beans:bean>
         </mvc:interceptor>
     </mvc:interceptors>

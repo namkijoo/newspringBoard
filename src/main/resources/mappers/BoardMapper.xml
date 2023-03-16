@@ -63,5 +63,31 @@
          WHERE bo_no = #{bo_no}
     </update>
     
+    <select id="listPageSearch" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
+		 select
+		  bo_no, title, name, date
+		 from test.new_table
+		
+		 
+		 <if test='searchType.equals("title")'>
+		  WHERE title LIKE CONCAT('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("content")'>
+		  WHERE content LIKE CONCAT('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("title_content")'>
+		  WHERE title LIKE CONCAT('%', #{keyword}, '%') 
+		   or content LIKE CONCAT('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("writer")'>
+		  WHERE name LIKE CONCAT('%', #{keyword}, '%')
+		 </if>
+		 
+		 order by bo_no DESC
+		  limit #{displayPost}, #{postNum}
+	</select> 
    
 </mapper>

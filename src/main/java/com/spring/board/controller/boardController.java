@@ -82,21 +82,44 @@ public class boardController {
 		return "redirect:/listPage?num=1";
 	}
 	
-	//게시물 목록 +페이징 추가
+	
+	
 	@RequestMapping(value="/listPage", method=RequestMethod.GET)
-	public String getboard(Model model,@RequestParam("num") int num) throws Exception {
+	public String getListPageSearch(Model model,@RequestParam("num") int num,@RequestParam(value = "searchType",required = false, defaultValue = "title") String searchType,
+			   @RequestParam(value = "keyword",required = false, defaultValue = "") String keyword)throws Exception {
 		int count=service.count();
 		int postNum=10;
 		int pageNum=(int)Math.ceil((double)count/postNum); 
 		int displayPost = (num-1)*postNum;
 		
+		int pageNum_cnt=10;
+		int endPageNum=(int)(Math.ceil((double)num/(double)pageNum_cnt)*pageNum_cnt);
+		int startPageNum=endPageNum-(pageNum_cnt-1);
+		
+		int endPageNum_tmp = (int)(Math.ceil((double)count/(double)pageNum_cnt));
+		
+		if(endPageNum>endPageNum_tmp) {
+			endPageNum=endPageNum_tmp;
+		}
+		
+		boolean prev= startPageNum==1?false:true;
+		boolean next=endPageNum*pageNum_cnt>=count?false:true;
+		
 		List<boardVO> list;
-		list = service.listPage(displayPost,postNum);
+		list = service.listPageSearch(displayPost,postNum,searchType,keyword);
+		
 		model.addAttribute("list",list);
 		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("startPageNum",startPageNum);
+		model.addAttribute("endPageNum",endPageNum);
+		model.addAttribute("prev",prev);
+		model.addAttribute("next",next);
+		model.addAttribute("select",num);
 		
 		return "board/listPage";
+		
 	}
+	
 	
 	
 }

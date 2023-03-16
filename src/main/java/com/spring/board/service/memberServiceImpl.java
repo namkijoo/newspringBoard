@@ -32,6 +32,11 @@ public class memberServiceImpl implements memberService {
 		return dao.idCheck(userId);
 	}
 	
+	//비번 중복체크
+	public String pwCheck(String userId) throws Exception{
+		return dao.pwCheck(userId);
+	}
+	
 	public void userModify(memberVO vo) throws Exception{
 		dao.userModify(vo);
 	};

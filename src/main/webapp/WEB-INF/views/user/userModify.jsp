@@ -16,24 +16,61 @@
 			pwCheckF.innerHTML = "유효성 체크 범위 벗어남"; 
 			$('#pwCheckF').css("color","red")
 			$('#sub').attr("disabled","disabled");
+			check=false;
 			}
 		
 		else{
 			pwCheckF.innerHTML = "유효성 체크 문제 없음";
 			$('#pwCheckF').css("color","blue")
-			$('#sub').removeAttr("disabled");
-
+			check=true;
 		}
 	}
 	
-	function change(){
-		
-		if(userPass.value=="${password}")
-		 	alert("기존 비밀번호와 같아요")
-			$('#sub').attr("type","button");
-	
+	var pass = "";
+	var check=false
+	function pwCheck(){
+		var userId = $('#userId').val();
+		var userPass = $('#userPass').val();
+		$.ajax({
+			type:"POST",
+			url: "/pwCheck",
+			data : { 
+				userId:userId,
+				},
+			success:function(result){	
+				pass=result;
+			},
+	    	error:function(request,status){
+	    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    	}
+		});	
 	}
 	
+	function change(){
+		if(userPass.value=="")
+			alert("비밀번호를 입력하세요.")
+		else if(userPass.value==this.pass){
+			alert("기존 비밀번호와 같아요");
+		}
+		else{
+			$('#sub').attr("type","submit");
+		}
+	}
+	
+	function compare(){
+		if((document.getElementById("userPass").value)==(document.getElementById("userPass2").value)){
+			document.getElementById("pwCheck").innerHTML="비밀번호가 일치합니다.";	
+			$('#pwCheck').css("color","blue")
+			$('#sub').removeAttr("disabled");	
+		}
+		else{
+			document.getElementById("pwCheck").innerHTML="비밀번호가 불일치합니다.";
+			$('#pwCheck').css("color","red")
+			$('#sub').attr("disabled","disabled");
+		}
+	}
+	
+	d
 </script>
 <title>Insert title here</title>
 </head>
@@ -45,12 +82,17 @@
 		</p>
 		<p>
 			<label for="userPass">패스워드</label>
-			<input type="text" id="userPass" name="userPass" oninput="pwcheck(userPass.value)">
+			<input type="text" id="userPass" name="userPass" oninput="pwcheck(userPass.value),pwCheck()">
 			<span id="pwCheckF"></span>
 			<span>기존 패스워드 = "${password}"</span>
 		</p>
 		<p>
-			<button type="submit" id="sub" class="sub" onclick="change()">회원정보 수정</button>
+			<label for="userPass2">패스워드확인</label>
+			<input type="text" id="userPass2" name="userPass2" oninput="compare()">
+			<span id="pwCheck"></span>
+		</p>
+		<p>
+			<button type="button" id="sub" class="sub" onclick="change()" disabled>회원정보 수정</button>
 		</p>
 		<p>
 			<button type="button" onclick="back()">처음으로</button>

@@ -1,6 +1,4 @@
 package com.spring.board.controller;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -56,7 +54,6 @@ public class memberController {
 		}else {
 			HttpSession session = req.getSession();
 			session.setAttribute("member", login);
-			session.setAttribute("password", vo.getUserPass());
 			session.setAttribute("name",vo.getUserId());
 			return "redirect:/listPage?num=1";
 		}
@@ -92,23 +89,13 @@ public class memberController {
 		return cnt;
 	}
 	
-	//패스워드 유효성검사
-	@RequestMapping(value = "/pwCheck", method = RequestMethod.POST)
+	//패스워드 중복체크
 	@ResponseBody
-	public boolean PwCheck(String pw) {		
+	@RequestMapping(value = "/pwCheck", method = RequestMethod.POST)
+	public String PwCheck(@RequestParam(value="userId") String userId) throws Exception {		
 		logger.info("PwCheck");		
-		
-		boolean check = false;	
-
-		String pw_chk = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*?&`~'\\\"+=])[A-Za-z[0-9]$@$!%*?&`~'\\\"+=]{6,18}$";
-				
-		Pattern pattern_symbol = Pattern.compile(pw_chk);		
-		Matcher matcher_symbol = pattern_symbol.matcher(pw);		
-		
-		if(matcher_symbol.find()) {	
-			check = true;
-		}		
-		return check;
+		String password =service.pwCheck(userId);
+		return password;
 	}
 	
 	//회원정보 수정

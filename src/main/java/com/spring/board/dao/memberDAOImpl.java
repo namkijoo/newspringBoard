@@ -35,6 +35,11 @@ public class memberDAOImpl implements memberDAO {
 		return sqlSession.selectOne(namespace+".idCheck",userId);
 	}
 	
+	//패스워드 중복체크
+	public String pwCheck(String userId) throws Exception{
+		return sqlSession.selectOne(namespace+".pwCheck",userId);
+	}
+	
 	//회원정보 수정
 	@Override
 	public void userModify(memberVO vo) throws Exception{

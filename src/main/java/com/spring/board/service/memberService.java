@@ -17,6 +17,9 @@ public interface memberService {
 	//아이디 중복체크
 	public int idCheck(String userId) throws Exception;
 	
+	//비번 중복체크
+	public String pwCheck(String userId) throws Exception;
+	
 	//회원정보 수정
 	public void userModify(memberVO vo) throws Exception;
 	
