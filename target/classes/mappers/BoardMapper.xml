@@ -4,9 +4,20 @@
 <mapper namespace="com.spring.board.BoardMapper">
 	
 	<select id="boardList" resultType="com.spring.board.dto.boardVO">
-		select*from test.new_table;
+		select*from test.new_table
+		order by bo_no ASC
+		limit 0,10
 	</select>
 	
+	<select id="count" resultType="int">
+		select count(bo_no) from test.new_table
+	</select>
+	
+	<select id="listPage" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
+		select*from test.new_table
+		order by bo_no DESC
+		limit #{displayPost}, #{postNum}
+	</select>
 	
 	<insert id="boardWrite" parameterType="com.spring.board.dto.boardVO">
 		INSERT 
@@ -51,4 +62,6 @@
              ,time=NOW()
          WHERE bo_no = #{bo_no}
     </update>
+    
+   
 </mapper>

@@ -1,5 +1,6 @@
 package com.spring.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,5 +45,21 @@ public class boardDAOImpl implements boardDAO {
 	@Override
 	public void boardUpdate(boardVO boardVO) throws Exception{
 		sqlSession.update(namespace+".boardUpdate",boardVO);
+	}
+	
+	//게시물 총갯수
+	@Override
+	public int count() throws Exception{
+		return sqlSession.selectOne(namespace+".count");
+	}
+	
+	//게시물 목록 + 페이징
+	@Override
+	public List<boardVO> listPage(int displayPost, int postNum) throws Exception{
+		HashMap<String,Integer> data = new HashMap<String,Integer>();
+		 data.put("displayPost", displayPost);
+		 data.put("postNum",postNum);
+		 
+		 return sqlSession.selectList(namespace+".listPage",data);
 	}
 }

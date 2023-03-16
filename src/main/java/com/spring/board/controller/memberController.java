@@ -56,8 +56,9 @@ public class memberController {
 		}else {
 			HttpSession session = req.getSession();
 			session.setAttribute("member", login);
+			session.setAttribute("password", vo.getUserPass());
 			session.setAttribute("name",vo.getUserId());
-			return "redirect:/boardList";
+			return "redirect:/listPage?num=1";
 		}
 	}
 	

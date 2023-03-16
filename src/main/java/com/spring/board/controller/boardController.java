@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.board.dto.ReplyVO;
 import com.spring.board.dto.boardVO;
@@ -45,7 +46,7 @@ public class boardController {
 	@RequestMapping(value = "/boardWriteDo", method=RequestMethod.POST)
 	public String boardWriteDo(boardVO boardVO) throws Exception{
 		service.boardWrite(boardVO);
-		return "redirect:/boardList";
+		return "redirect:/listPage?num=1";
 	}
 	
 	//댓글 포함 상세화면
@@ -64,7 +65,7 @@ public class boardController {
 	@RequestMapping(value="/boardDelete", method=RequestMethod.GET)
 	public String boardDelete(int bo_no) throws Exception{
 		service.boardDelete(bo_no);
-		return "redirect:/boardList";
+		return "redirect:/listPage?num=1";
 	}
 	
 	//수정
@@ -78,6 +79,24 @@ public class boardController {
 	@RequestMapping(value="/boardUpdate", method=RequestMethod.POST)
 	public String postupdate(boardVO boardVO) throws Exception{
 		service.boardUpdate(boardVO);
-		return "redirect:/boardList";
+		return "redirect:/listPage?num=1";
 	}
+	
+	//게시물 목록 +페이징 추가
+	@RequestMapping(value="/listPage", method=RequestMethod.GET)
+	public String getboard(Model model,@RequestParam("num") int num) throws Exception {
+		int count=service.count();
+		int postNum=10;
+		int pageNum=(int)Math.ceil((double)count/postNum); 
+		int displayPost = (num-1)*postNum;
+		
+		List<boardVO> list;
+		list = service.listPage(displayPost,postNum);
+		model.addAttribute("list",list);
+		model.addAttribute("pageNum",pageNum);
+		
+		return "board/listPage";
+	}
+	
+	
 }

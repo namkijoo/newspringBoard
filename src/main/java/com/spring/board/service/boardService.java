@@ -20,4 +20,10 @@ public interface boardService {
 	
 	//게시물 수정
 	public void boardUpdate(boardVO boardVO) throws Exception;
+	
+	//게시물 총 갯수
+	public int count() throws Exception;
+	
+	//게시물 목록 +페이징
+	public List<boardVO> listPage(int displayPost, int postNum) throws Exception;
 }
