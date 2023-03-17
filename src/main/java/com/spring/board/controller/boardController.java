@@ -83,20 +83,35 @@ public class boardController {
 	}
 	
 	
-	
+	//페이징 + 검색
 	@RequestMapping(value="/listPage", method=RequestMethod.GET)
 	public String getListPageSearch(Model model,@RequestParam("num") int num,@RequestParam(value = "searchType",required = false, defaultValue = "title") String searchType,
 			   @RequestParam(value = "keyword",required = false, defaultValue = "") String keyword)throws Exception {
-		int count=service.count();
+		
+		//게시물 총갯수
+		int count=service.searchCount(searchType,keyword);
+		
+		//한 페이지에 출력할 게시물 갯수
 		int postNum=10;
-		int pageNum=(int)Math.ceil((double)count/postNum); 
+		
+		//하단 페이징 번호(번호가 몇번까지 필요한지 계산)
+		int pageNum=(int)Math.ceil((double)count/postNum);
+		
+		//출력 게시물 
 		int displayPost = (num-1)*postNum;
 		
+		//하단에 표시할 페이징 번호의 갯수
 		int pageNum_cnt=10;
+		
+		//표시되는 페이지 번호 중 마지막 번호
 		int endPageNum=(int)(Math.ceil((double)num/(double)pageNum_cnt)*pageNum_cnt);
+		
+		//표시되는 페이지 번호 중 첫번재 번호
 		int startPageNum=endPageNum-(pageNum_cnt-1);
 		
+		//마지막 번호 재계산
 		int endPageNum_tmp = (int)(Math.ceil((double)count/(double)pageNum_cnt));
+		
 		
 		if(endPageNum>endPageNum_tmp) {
 			endPageNum=endPageNum_tmp;
@@ -110,11 +125,20 @@ public class boardController {
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pageNum",pageNum);
+		
+		//시작 및 끝 번호
 		model.addAttribute("startPageNum",startPageNum);
 		model.addAttribute("endPageNum",endPageNum);
+		
+		//이전 및 다음
 		model.addAttribute("prev",prev);
 		model.addAttribute("next",next);
+		
+		//현재 페이지
 		model.addAttribute("select",num);
+		
+		model.addAttribute("searchType",searchType);
+		model.addAttribute("keyword",keyword);
 		
 		return "board/listPage";
 		

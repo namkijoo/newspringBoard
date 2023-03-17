@@ -8,16 +8,7 @@
 		order by bo_no ASC
 		limit 0,10
 	</select>
-	
-	<select id="count" resultType="int">
-		select count(bo_no) from test.new_table
-	</select>
-	
-	<select id="listPage" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
-		select*from test.new_table
-		order by bo_no DESC
-		limit #{displayPost}, #{postNum}
-	</select>
+
 	
 	<insert id="boardWrite" parameterType="com.spring.board.dto.boardVO">
 		INSERT 
@@ -63,9 +54,21 @@
          WHERE bo_no = #{bo_no}
     </update>
     
+	
+	<select id="count" resultType="int">
+		select count(bo_no) from test.new_table
+	</select>
+	
+	<select id="listPage" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
+		select*from test.new_table
+		order by bo_no DESC
+		limit #{displayPost}, #{postNum}
+	</select>
+	
+	    
     <select id="listPageSearch" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
 		 select
-		  bo_no, title, name, date
+		  bo_no, title, name, date,time
 		 from test.new_table
 		
 		 
@@ -89,5 +92,26 @@
 		 order by bo_no DESC
 		  limit #{displayPost}, #{postNum}
 	</select> 
+	
+	<select id="searchCount" parameterType="hashMap" resultType="int">
+		 select count(bo_no) from test.new_table 
+		  
+		 <if test='searchType.equals("title")'>
+		  WHERE title LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("content")'>
+		  WHERE content LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("title_content")'>
+		  WHERE title LIKE concat('%', #{keyword}, '%') 
+		   or content LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("writer")'>
+		  WHERE name LIKE concat('%', #{keyword}, '%')
+		 </if>
+ 	</select>
    
 </mapper>

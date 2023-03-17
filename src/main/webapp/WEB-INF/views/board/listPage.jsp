@@ -32,8 +32,8 @@ function userdelete(){
 
 function search(){
 	let searchType = document.getElementsByName("searchType")[0].value;
-	  let keyword =  document.getElementsByName("keyword")[0].value;
-	  location.href = "/listPage?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+	let keyword =  document.getElementsByName("keyword")[0].value;
+	location.href = "/listPage?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
 }
 </script>
 
@@ -43,6 +43,7 @@ function search(){
 </head>
 
 <body>
+	
 	<table>
 		<tr>
 			<td>제목</td>
@@ -61,6 +62,20 @@ function search(){
 		</tr>
 		</c:forEach>
 	</table>
+	<br>
+	<div>
+		<select name="searchType">
+			<option value="title" <c:if test="${searchType eq 'title'}">selected</c:if>>제목</option>
+			<option value="content" <c:if test="${searchType eq 'content'}">selected</c:if>>내용</option>
+			<option value="title_content" <c:if test="${searchType eq 'title_content'}">selected</c:if>>제목+내용</option>
+			<option value="writer" <c:if test="${searchType eq 'writer'}">selected</c:if>>작성자</option>
+		</select>
+			
+		<input type="text" name="keyword" value="${keyword}"/>
+			
+		<button type="button" id="searchBtn" onclick="search()">검색</button>
+	</div>
+	<br>
 	<div>
 		<c:if test="${prev}">
 			<span>[<a href="/listPage?num=${startPageNum-1}">이전</a>]</span>
@@ -68,7 +83,13 @@ function search(){
 		
 		<c:forEach begin="${startPageNum}" end="${endPageNum}" var="num">
 			<span>
-				<a href="/listPage?num=${num}">${num}</a>
+				<c:if test="${select != num}">
+			 	   <a href="/listPage?num=${num}">${num}</a>
+				</c:if>    
+  
+				<c:if test="${select == num}">
+				   <b>${num}</b>
+				 </c:if>
 			</span>
 		</c:forEach>
 		
@@ -76,18 +97,6 @@ function search(){
 			<span>[<a href="/listPage?num=${endPageNum+1}">다음</a>]</span>
 		</c:if>
 		
-		<div>
-			<select name="searchType">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="title_content">제목+내용</option>
-				<option value="writer">작성자</option>
-			</select>
-			
-			<input type="text" name="keyword"/>
-			
-			<button type="button" id="searchBtn" onclick="search()">검색</button>
-		</div>
 	</div>
 	<br>
 	<button type="button" onclick="goBoardWrite()">작성</button>

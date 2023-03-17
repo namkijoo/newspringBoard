@@ -63,6 +63,7 @@ public class boardDAOImpl implements boardDAO {
 		 return sqlSession.selectList(namespace+".listPage",data);
 	}
 	
+	//게시물 목록 + 페이징 + 검색
 	 @Override
 	 public List<boardVO> listPageSearch(
 	   int displayPost, int postNum, String searchType, String keyword) throws Exception {
@@ -76,5 +77,14 @@ public class boardDAOImpl implements boardDAO {
 	  data.put("keyword", keyword);
 	  
 	  return sqlSession.selectList(namespace + ".listPageSearch", data);
+	 }
+	 
+	 public int searchCount(String searchType, String keyword) throws Exception{
+		 HashMap<String, Object> data = new HashMap<String,Object>();
+		 
+		 data.put("searchType",searchType);
+		 data.put("keyword", keyword);
+		 
+		 return sqlSession.selectOne(namespace+".searchCount",data);
 	 }
 }

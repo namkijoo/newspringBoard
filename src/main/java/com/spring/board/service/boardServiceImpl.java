@@ -61,5 +61,9 @@ public class boardServiceImpl implements boardService {
 			int displayPost, int postNum, String searchType, String keyword) throws Exception{
 			return  dao.listPageSearch(displayPost, postNum, searchType, keyword);
 		}
+		
+	public int searchCount(String searchType, String keyword) throws Exception{
+		return dao.searchCount(searchType, keyword);
+	}
 	
 }

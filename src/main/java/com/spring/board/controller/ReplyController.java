@@ -37,6 +37,7 @@ public class ReplyController {
 			 
 		model.addAttribute("reply", reply);
 		
+		
 		return "board/modify";
 	}
 	

@@ -70,7 +70,7 @@
 		}
 	}
 	
-	d
+	
 </script>
 <title>Insert title here</title>
 </head>
@@ -84,7 +84,6 @@
 			<label for="userPass">패스워드</label>
 			<input type="text" id="userPass" name="userPass" oninput="pwcheck(userPass.value),pwCheck()">
 			<span id="pwCheckF"></span>
-			<span>기존 패스워드 = "${password}"</span>
 		</p>
 		<p>
 			<label for="userPass2">패스워드확인</label>

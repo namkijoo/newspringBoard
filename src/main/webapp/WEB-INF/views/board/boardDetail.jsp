@@ -8,13 +8,48 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-	function editButton(){
-		location.href="/reply/modify/?bno=${rpl.bno}&rno=${rpl.rno}"
+	function deleteBtn(){
+		if("${data.name}"=="${name}"){
+			location.href="/boardDelete/?bo_no=${data.bo_no}";
+		}
+		else{
+			alert("삭제가 불가능해요");
+		}
+	}
+	
+	function editBtn(){
+		if("${data.name}"=="${name}"){
+			location.href='/boardUpdate/?bo_no=${data.bo_no}';
+		}
+		else{
+			alert("수정이 불가능해요");
+		}
+	}
+	
+
+	function editReply(replyWriter,bno,rno){
+		if("${name}"==replyWriter){
+			location.href="/reply/modify/?bno="+bno+"&rno="+rno;
+		}
+		else{
+			alert("수정이 불가능해요")
+			location.href="redirect:/"
+		}
+	}
+	
+	function deleteReply(replyWriter,bno,rno){
+		if("${name}"==replyWriter){
+			location.href="/reply/delete/?bno="+bno+"&rno="+rno;
+		}
+		else{
+			alert("수정이 불가능해요")
+			location.href="redirect:/"
+		}
 	}
 </script>
 </head>
 <body>
-	<h2>Detail Page</h2>
+	<a href="/"><h2>Detail Page</h2></a>
 	<hr>
 	<table>
 		<th>정보</th>
@@ -37,8 +72,8 @@
 	<div>
 	<textarea readonly rows="5" cols="70">${data.content}</textarea>
 	</div>
-	<button type="button" onclick="location.href='/boardUpdate/?bo_no=${data.bo_no}'">게시물수정</button>
-	<button type="button" onclick="location.href='/boardDelete/?bo_no=${data.bo_no}'">게시물삭제</button>
+	<button type="button" onclick="editBtn()">게시물수정</button>
+	<button type="button" id="delete" onclick="deleteBtn()" >게시물삭제</button>
 	<br>
 	<br>
 	<hr>
@@ -50,9 +85,8 @@
 	        <p>작성자 : ${rpl.writer} / <fmt:formatDate value="${rpl.regDate}" pattern="yyyy-MM-dd"/></p>
 	        <p>내용 : ${rpl.content }</p>
 	        <p>
-	        	<button type="button" onclick="location.href='/reply/modify/?bno=${rpl.bno}&rno=${rpl.rno}'">수정</button>
-	        	<button type="button" onclick="location.href='/reply/delete/?bno=${rpl.bno}&rno=${rpl.rno}'">삭제</button>
-	        	
+	        	<button type="button" id="rplyEditBtn" onclick="editReply('${rpl.writer}','${rpl.bno}','${rpl.rno}')" >수정</button>
+	        	<button type="button"  onclick="deleteReply('${rpl.writer}','${rpl.bno}','${rpl.rno}')" >삭제</button>
 	        </p>
 	    </div>
 	</li>    

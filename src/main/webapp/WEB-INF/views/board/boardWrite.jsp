@@ -7,7 +7,7 @@
 <title>Write Page</title>
 <script type="text/javascript">
 	function goBoardList(){
-		location.href="/boardList"
+		location.href="/listPage?num=1"
 	}
 	
 	function addWrite(){
