@@ -44,7 +44,7 @@ function search(){
 
 <body>
 	
-	<table>
+	<table border=1>
 		<tr>
 			<td>제목</td>
 			<td>작성자</td>

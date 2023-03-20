@@ -9,12 +9,17 @@
  function register(){
 	 location.href="register"
  }
+ 
+function show(){
+	document.getElementById("userPass").type="text";
+}
 </script>
 <body>
- Login Page
+ <h1>Login Page</h1>
  <form action="/login" id="loginCheck" method="post">
- 	<input type="text" name="userId" >
- 	<input type="text" name="userPass">
+ 	<label for="userId">아이디 : </label>&nbsp;&nbsp;&nbsp;<input type="text" name="userId" ><br>
+ 	<label for="userPass">비밀번호 : </label><input type="password" id="userPass" name="userPass"><button type="button" onclick="show()">보이기</button>
+ 	<br><br>
  	<input type="submit" value="login">
  	<button type="button" onclick="javascript:logout();">logout</button>
  	<button type="button" onclick="javascript:register();">register</button>

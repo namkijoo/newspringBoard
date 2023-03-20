@@ -10,7 +10,12 @@
 <script>
 	function deleteBtn(){
 		if("${data.name}"=="${name}"){
-			location.href="/boardDelete/?bo_no=${data.bo_no}";
+			if(confirm("정말 삭제하시겠습니까?")==true){
+				location.href="/boardDelete/?bo_no=${data.bo_no}";
+			}
+			else{
+				return;
+			}
 		}
 		else{
 			alert("삭제가 불가능해요");
@@ -51,7 +56,7 @@
 <body>
 	<a href="/"><h2>Detail Page</h2></a>
 	<hr>
-	<table>
+	<table border=1>
 		<th>정보</th>
 		<th>데이터</th>
 		<tr>
@@ -94,9 +99,11 @@
 <div>
 	<form method="post" action="/reply/write">
 		<p>
-			<label>댓글 작성자</label> <input type="text" name="writer" value="${name}" Readonly>
+			<label>댓글 작성자</label> <br> 
+			<input type="text" name="writer" value="${name}" Readonly>
 		</p>
 		<p>
+			<span>댓글내용</span><br>
 			<textarea rows="5" cols="50" name="content"></textarea>
 		</p>
 		<p>

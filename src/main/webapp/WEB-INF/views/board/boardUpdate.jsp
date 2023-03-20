@@ -15,7 +15,7 @@
 	<form method="post" id="update_data">
 		<div>글 번호 : ${data.bo_no}</div>
 		<div>이름 :</div>
-		<div><input name="name" value="${data.name}" type="text"></div>
+		<div><input name="name" value="${data.name}" type="text" readonly></div>
 		<div>제목 :</div>
 		<div><input name="title" value="${data.title}" type="text"></div>
 		<div>내용 :</div>

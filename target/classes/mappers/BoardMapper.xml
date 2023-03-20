@@ -97,20 +97,20 @@
 		 select count(bo_no) from test.new_table 
 		  
 		 <if test='searchType.equals("title")'>
-		  WHERE title LIKE concat('%', #{keyword}, '%')
+		  WHERE title LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("content")'>
-		  WHERE content LIKE concat('%', #{keyword}, '%')
+		  WHERE content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("title_content")'>
-		  WHERE title LIKE concat('%', #{keyword}, '%') 
-		   or content LIKE concat('%', #{keyword}, '%')
+		  WHERE title LIKE CONCAT('%', #{keyword}, '%') 
+		   or content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("writer")'>
-		  WHERE name LIKE concat('%', #{keyword}, '%')
+		  WHERE name LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
  	</select>
    
