@@ -23,7 +23,7 @@
 			and bno = #{bno}
 	</update>
 	
-	<delete id="replyDelete" parameterType="com.spring.board.dto.ReplyVO">
+	<delete id="replyDelete" >
 		delete from test.tbi_reply
 		where rno=#{rno} and bno=#{bno}
 	</delete>

@@ -32,4 +32,6 @@ public interface boardService {
 		int displayPost, int postNum, String searchType, String keyword) throws Exception;
 	
 	public int searchCount(String searchType, String keyword) throws Exception;
+	
+	public int replyCount(int bno) throws Exception;
 }

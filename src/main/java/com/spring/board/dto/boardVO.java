@@ -3,6 +3,8 @@ package com.spring.board.dto;
 import java.sql.Date;
 import java.sql.Time;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class boardVO {
 	private Integer bo_no;
 	private String name;
@@ -10,6 +12,33 @@ public class boardVO {
 	private Date date;
 	private Time time;
 	private String content;
+	private int replyCount;
+	private String file_name;
+	private MultipartFile uploadFile;
+	
+	
+	
+	
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	
+	
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	public int getBo_no() {
 		return bo_no;
 	}

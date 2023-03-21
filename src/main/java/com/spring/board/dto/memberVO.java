@@ -1,17 +1,31 @@
 package com.spring.board.dto;
 
-import javax.validation.constraints.NotEmpty;
+
 
 public class memberVO {
 	private String userId;
 	
-	@NotEmpty(message="pw를 입력하세요")
+
 	private String userPass;
 	
-	@NotEmpty(message="id를 입력하세요")
+	public String role;
+	
+	
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
 	public String getUserId() {
 		return userId;
 	}
+	
+	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}

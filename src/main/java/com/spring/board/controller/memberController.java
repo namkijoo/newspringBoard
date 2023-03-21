@@ -6,6 +6,7 @@ import org.aopalliance.intercept.Interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -35,6 +36,14 @@ public class memberController {
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String postRegister(memberVO vo) throws Exception{
 		logger.debug("post register");
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println("암호화 하기 전 pw:"+vo.getUserPass());
+		
+		String securePass = encoder.encode(vo.getUserPass());
+		System.out.println("암호화 한 후 pw:"+securePass);
+		
+		vo.setUserPass(securePass);
 		service.register(vo);
 		return "redirect:/"; 
 	}
@@ -45,17 +54,23 @@ public class memberController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(memberVO vo, HttpServletRequest req,Model model) throws Exception{
 		logger.info("post login");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		
 		memberVO login = service.login(vo);
 		
 		
-		if(login == null) {
-			return "redirect:/";
-			
-		}else {
+		if(login!=null&&encoder.matches(vo.getUserPass(), login.getUserPass())) {
 			HttpSession session = req.getSession();
 			session.setAttribute("member", login);
 			session.setAttribute("name",vo.getUserId());
+			session.setAttribute("role",login.role);
+			System.out.println("-----------------------------------------------------------------"+login.role);
 			return "redirect:/listPage?num=1";
+		}
+		
+		else{
+			return "redirect:/";
 		}
 	}
 	
@@ -106,11 +121,11 @@ public class memberController {
 	}
 	
 	@RequestMapping(value = "/user/modify",method=RequestMethod.POST)
-	public String postModify(HttpSession session, memberVO vo) throws Exception{
+	public String postModify(HttpServletRequest request, memberVO vo) throws Exception{
 		logger.info("post modify");
 		
 		service.userModify(vo);
-		
+		HttpSession session =request.getSession();
 		session.invalidate();
 		
 		return "redirect:/";

@@ -9,52 +9,41 @@
 <title>Insert title here</title>
 <script>
 	function deleteBtn(){
-		if("${data.name}"=="${name}"){
-			if(confirm("정말 삭제하시겠습니까?")==true){
-				location.href="/boardDelete/?bo_no=${data.bo_no}";
-			}
-			else{
-				return;
-			}
+		if(confirm("정말 삭제하시겠습니까?")==true){
+			location.href="/boardDelete/?bo_no=${data.bo_no}";
 		}
 		else{
-			alert("삭제가 불가능해요");
+			return;
 		}
 	}
 	
+	
+	
+	
 	function editBtn(){
-		if("${data.name}"=="${name}"){
-			location.href='/boardUpdate/?bo_no=${data.bo_no}';
-		}
-		else{
-			alert("수정이 불가능해요");
-		}
+		location.href='/boardUpdate/?bo_no=${data.bo_no}';
+	
 	}
 	
 
-	function editReply(replyWriter,bno,rno){
-		if("${name}"==replyWriter){
-			location.href="/reply/modify/?bno="+bno+"&rno="+rno;
-		}
-		else{
-			alert("수정이 불가능해요")
-			location.href="redirect:/"
-		}
+	function editReply(bno,rno){
+		location.href="/reply/modify/?bno="+bno+"&rno="+rno;
 	}
 	
-	function deleteReply(replyWriter,bno,rno){
-		if("${name}"==replyWriter){
-			location.href="/reply/delete/?bno="+bno+"&rno="+rno;
-		}
-		else{
-			alert("수정이 불가능해요")
-			location.href="redirect:/"
-		}
+	function deleteReply(bno,rno){
+		location.href="/reply/delete/?bno="+bno+"&rno="+rno;
 	}
+	
+	 
+	 
+	 
+	 
+	
+	  
 </script>
 </head>
 <body>
-	<a href="/"><h2>Detail Page</h2></a>
+	<a href="/listPage?num=1"><h2>Detail Page</h2></a>
 	<hr>
 	<table border=1>
 		<th>정보</th>
@@ -71,14 +60,37 @@
 			<td>제목</td>
 			<td>${data.title}</td>
 		</tr>
+		<tr>
+			<td>댓글수</td>
+			<td>${replyCount}</td>
+		</tr>
+		<c:if test="${data.file_name ne null}">
+			<tr>
+				<td bgcolor="orange">첨부파일</td>
+				<td align="left"><a href="http://localhost:8081/fileDownload.do?file_name=${data.file_name}">${data.file_name}</a></td>
+			</tr>
+			</c:if>
 	</table>
 	<br>
 	내용
 	<div>
 	<textarea readonly rows="5" cols="70">${data.content}</textarea>
 	</div>
-	<button type="button" onclick="editBtn()">게시물수정</button>
-	<button type="button" id="delete" onclick="deleteBtn()" >게시물삭제</button>
+	<c:if test="${data.name==name||role=='admin'}">
+		<form method="post" action="/boardDelete">
+			<button type="submit" id="delete">게시물삭제</button>
+			<input name="bo_no" value="${data.bo_no}" style="display:none"/>	
+		</form>
+		
+		<form method="get" action="/boardUpdate">
+			<button type="submit" id="edit" >게시물수정</button>
+			<input name="bo_no" value="${data.bo_no}" style="display:none"/>	
+		</form>
+		
+
+		
+	</c:if>
+	
 	<br>
 	<br>
 	<hr>
@@ -90,28 +102,30 @@
 	        <p>작성자 : ${rpl.writer} / <fmt:formatDate value="${rpl.regDate}" pattern="yyyy-MM-dd"/></p>
 	        <p>내용 : ${rpl.content }</p>
 	        <p>
-	        	<button type="button" id="rplyEditBtn" onclick="editReply('${rpl.writer}','${rpl.bno}','${rpl.rno}')" >수정</button>
-	        	<button type="button"  onclick="deleteReply('${rpl.writer}','${rpl.bno}','${rpl.rno}')" >삭제</button>
+	        	<c:if test="${name==rpl.writer||role=='admin'}">
+	        		<button type="button" id="rplyEditBtn" onclick="editReply('${rpl.bno}','${rpl.rno}')" >수정</button>
+	        		<button type="button"  onclick="deleteReply('${rpl.bno}','${rpl.rno}')" >삭제</button>
+	        	</c:if>
 	        </p>
 	    </div>
 	</li>    
 	</c:forEach>
-<div>
-	<form method="post" action="/reply/write">
-		<p>
-			<label>댓글 작성자</label> <br> 
-			<input type="text" name="writer" value="${name}" Readonly>
-		</p>
-		<p>
-			<span>댓글내용</span><br>
-			<textarea rows="5" cols="50" name="content"></textarea>
-		</p>
-		<p>
-		<input type="hidden" name="bno" value="${data.bo_no}">
-			<button type="submit">댓글 작성</button>
-		</p>
-	</form>
-	
-</div>
+	<div>
+		<form method="post" action="/reply/write">
+			<p>
+				<label>댓글 작성자</label> <br> 
+				<input type="text" name="writer" value="${name}" Readonly>
+			</p>
+			<p>
+				<span>댓글내용</span><br>
+				<textarea rows="5" cols="50" name="content"></textarea>
+			</p>
+			<p>
+			<input type="hidden" name="bno" value="${data.bo_no}">
+				<button type="submit">댓글 작성</button>
+			</p>
+		</form>
+		
+	</div>
 </body>
 </html>

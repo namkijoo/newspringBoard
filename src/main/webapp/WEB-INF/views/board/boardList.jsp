@@ -47,7 +47,7 @@ function userdelete(){
 		</tr>
 		<c:forEach items="${list}" var="test">
 		<tr>
-			<td>${test.title}</td>
+			<td>${test.title}${replyCount}</td>
 			<td><a href="/boardDetail/?bo_no=${test.bo_no}">${test.name}</a></td>
 			<td>${test.time}</td>
 			<td>${test.date}</td>

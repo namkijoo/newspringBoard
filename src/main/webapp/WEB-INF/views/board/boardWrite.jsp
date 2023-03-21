@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Write Page</title>
 <script type="text/javascript">
 	function goBoardList(){
@@ -21,18 +21,16 @@
 			form.submit();
 		}
 	}
-	
-	
-	
 </script>
 </head>
 <body>
-<form method="post" id="insert_data" name="form">
+<form method="post" id="insert_data" name="form" enctype="multipart/form-data">
 	제목: &nbsp;&nbsp;&nbsp; <input name="title" type="text" id="title">
 	<br><input name="name" type="text" id="name" value=${name} readonly style="display:none">
 	내용 : &nbsp;&nbsp;&nbsp; <textarea rows="5" cols="50" name="content" id="content"></textarea> 
-	
+	<br><input type="file" name="uploadFile" id="uploadFile"/>
 </form>
+<br>
  <button type="button" onclick="javascript:goBoardList()">목록으로 돌아가기</button>
   <button type="button" onclick="javascript:addWrite()">저장</button>
 </body>

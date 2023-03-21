@@ -5,22 +5,22 @@
 <mapper namespace="com.spring.board.memberMapper">
 	<insert id="register">
 		insert into test.member(
-			userId,
-			userPass
+			userId
+			,userPass
+			,role
 		)
 		values(
-			#{userId},
-			#{userPass}
-			
+			#{userId}
+			,#{userPass}
+			,"normal"
 		)
 		
 	</insert>
 	
 	<select id="login" resultType="com.spring.board.dto.memberVO">
-		select userId, userPass
+		select userId, userPass, role
 			from test.member
 		where userId=#{userId}
-		and userPass=#{userPass} 
 	</select>
 	
 	<select id="idCheck" resultType="Integer">

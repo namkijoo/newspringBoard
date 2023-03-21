@@ -35,6 +35,8 @@ function search(){
 	let keyword =  document.getElementsByName("keyword")[0].value;
 	location.href = "/listPage?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
 }
+
+
 </script>
 
 

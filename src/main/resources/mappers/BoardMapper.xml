@@ -20,6 +20,7 @@
                   ,date
                   ,bo_no
                   ,content
+                  ,file_name
               ) 
         VALUES 
              (
@@ -29,12 +30,13 @@
                 , NOW() 
                 , 0
                 ,#{content}
+                ,#{file_name}
               )
 	</insert>
 	
 	
 	<select id="boardDetail" resultType="com.spring.board.dto.boardVO">
-		select name,title,time,date,bo_no,content
+		select name,title,time,date,bo_no,content,file_name
 		from test.new_table where bo_no = #{bo_no}
 	</select>
 	
@@ -68,9 +70,12 @@
 	    
     <select id="listPageSearch" parameterType="hashMap" resultType="com.spring.board.dto.boardVO">
 		 select
-		  bo_no, title, name, date,time
-		 from test.new_table
-		
+		  		bo_no
+		  		,title
+		  		,name
+		  		,date,time
+		 from 
+		 	test.new_table
 		 
 		 <if test='searchType.equals("title")'>
 		  WHERE title LIKE CONCAT('%', #{keyword}, '%')
@@ -95,23 +100,29 @@
 	
 	<select id="searchCount" parameterType="hashMap" resultType="int">
 		 select count(bo_no) from test.new_table 
-		  
+		   WHERE
+		   	1=1
 		 <if test='searchType.equals("title")'>
-		  WHERE title LIKE CONCAT('%', #{keyword}, '%')
+		  and title LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("content")'>
-		  WHERE content LIKE CONCAT('%', #{keyword}, '%')
+		  and content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("title_content")'>
-		  WHERE title LIKE CONCAT('%', #{keyword}, '%') 
+		  and title LIKE CONCAT('%', #{keyword}, '%') 
 		   or content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("writer")'>
-		  WHERE name LIKE CONCAT('%', #{keyword}, '%')
+		  and name LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
+ 	</select>
+ 	
+ 	<select id="replyCount" resultType="int">
+ 		select count(rno) from test.tbi_reply
+ 		where bno=#{bno}
  	</select>
    
 </mapper>

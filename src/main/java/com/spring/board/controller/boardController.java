@@ -1,7 +1,17 @@
 package com.spring.board.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -9,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.board.dto.ReplyVO;
 import com.spring.board.dto.boardVO;
@@ -33,6 +44,9 @@ public class boardController {
 	public String board(boardVO boardVO,Model model) throws Exception {
 		List<boardVO> list;
 		list = service.list();
+		
+		
+		
 		model.addAttribute("list",list);	
 		return "board/boardList";	
 	}
@@ -45,15 +59,34 @@ public class boardController {
 	
 	@RequestMapping(value = "/boardWriteDo", method=RequestMethod.POST)
 	public String boardWriteDo(boardVO boardVO) throws Exception{
+		String file_name=null;
+		MultipartFile uploadFile = boardVO.getUploadFile();
+		if(uploadFile!=null&&!uploadFile.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);
+			
+			UUID uuid = UUID.randomUUID();
+			file_name=uuid+"."+ext;
+			uploadFile.transferTo(new File("D:\\upload\\"+file_name));
+		}
+		boardVO.setFile_name(file_name);
+		
+		
 		service.boardWrite(boardVO);
 		return "redirect:/listPage?num=1";
 	}
 	
 	//댓글 포함 상세화면
 	@RequestMapping(value="/boardDetail", method=RequestMethod.GET)
-	public String boardDetail(Model model,int bo_no) throws Exception{
+	public String boardDetail(Model model,int bo_no,boardVO boardVO) throws Exception{
 		boardVO data = service.boardDetail(bo_no);
 		model.addAttribute("data",data);
+		
+		int replyCount = service.replyCount(boardVO.getBo_no());
+		
+		
+		model.addAttribute("replyCount",replyCount);
+		System.out.println("============================================================"+boardVO.getReplyCount());
 		
 		List<ReplyVO> reply;
 		reply = replyService.list(bo_no);
@@ -62,8 +95,8 @@ public class boardController {
 	}
 	
 	//삭제
-	@RequestMapping(value="/boardDelete", method=RequestMethod.GET)
-	public String boardDelete(int bo_no) throws Exception{
+	@RequestMapping(value="/boardDelete", method=RequestMethod.POST)
+	public String boardDelete(@RequestParam(value="bo_no") int bo_no) throws Exception{
 		service.boardDelete(bo_no);
 		return "redirect:/listPage?num=1";
 	}
@@ -87,7 +120,6 @@ public class boardController {
 	@RequestMapping(value="/listPage", method=RequestMethod.GET)
 	public String getListPageSearch(Model model,@RequestParam("num") int num,@RequestParam(value = "searchType",required = false, defaultValue = "title") String searchType,
 			   @RequestParam(value = "keyword",required = false, defaultValue = "") String keyword)throws Exception {
-		
 		//게시물 총갯수
 		int count=service.searchCount(searchType,keyword);
 		
@@ -144,6 +176,60 @@ public class boardController {
 		
 	}
 	
+	@RequestMapping(value="/replyCount",method=RequestMethod.POST)
+	public int replyCount(boardVO boardVO) throws Exception{
+		int replyCount = service.replyCount(boardVO.getBo_no());
+		return replyCount;
+		
+	}
 	
-	
+	@RequestMapping(value = "fileDownload.do")
+    public void fileDownload4(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        //String path =  request.getSession().getServletContext().getRealPath("저장경로");
+        
+        String file_name =request.getParameter("file_name");
+        String realFilename="";
+         
+        try {
+            String browser = request.getHeader("User-Agent"); 
+            //파일 인코딩 
+            if (browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
+                file_name = URLEncoder.encode(file_name, "UTF-8").replaceAll("\\+","%20");
+            } 
+            else {
+                file_name = new String(file_name.getBytes("UTF-8"), "ISO-8859-1");
+            }
+        } 
+        catch (UnsupportedEncodingException ex) {
+            System.out.println("UnsupportedEncodingException");
+        }
+        
+        realFilename = "D:\\upload\\" + file_name;
+        File file1 = new File(realFilename);
+        if (!file1.exists()) {
+            return ;
+        }
+         
+        // 파일명 지정        
+        response.setContentType("application/octer-stream");
+        response.setHeader("Content-Transfer-Encoding", "binary;");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + file_name + "\";");
+        System.out.println(file_name);
+        try {
+            OutputStream os = response.getOutputStream();
+            FileInputStream fis = new FileInputStream(realFilename);
+ 
+            int ncount = 0;
+            byte[] bytes = new byte[512];
+ 
+            while ((ncount = fis.read(bytes)) != -1 ) {
+                os.write(bytes, 0, ncount);
+            }
+            fis.close();
+            os.close();
+        } 
+        catch (Exception e) {
+            System.out.println("FileNotFoundException : " + e);
+        }
+    }
 }

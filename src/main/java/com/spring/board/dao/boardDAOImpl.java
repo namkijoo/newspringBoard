@@ -79,6 +79,7 @@ public class boardDAOImpl implements boardDAO {
 	  return sqlSession.selectList(namespace + ".listPageSearch", data);
 	 }
 	 
+	 @Override
 	 public int searchCount(String searchType, String keyword) throws Exception{
 		 HashMap<String, Object> data = new HashMap<String,Object>();
 		 
@@ -86,5 +87,12 @@ public class boardDAOImpl implements boardDAO {
 		 data.put("keyword", keyword);
 		 
 		 return sqlSession.selectOne(namespace+".searchCount",data);
+	 }
+	 
+	 
+	 //댓글수
+	 @Override
+	 public int replyCount(int bno) throws Exception{
+		 return sqlSession.selectOne(namespace+".replyCount",bno);
 	 }
 }
