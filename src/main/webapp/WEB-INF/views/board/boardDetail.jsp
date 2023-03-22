@@ -8,21 +8,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+	var replyCount="${replyCount}"
 	function deleteBtn(){
-		if(confirm("정말 삭제하시겠습니까?")==true){
-			location.href="/boardDelete/?bo_no=${data.bo_no}";
-		}
+		if(replyCount!=0){
+			alert("댓글이 있는 게시물은 삭제할 수 없습니다.");
+			document.getElementById("delete").type="button";
+		}	
 		else{
-			return;
+			if(confirm("정말 삭제하시겠습니까?")==true){
+				document.getElementById("delete").type="submit";	
+			}
+			else
+				document.getElementById("delete").type="button";
+				true;
+			
 		}
 	}
 	
-	
-	
-	
 	function editBtn(){
 		location.href='/boardUpdate/?bo_no=${data.bo_no}';
-	
 	}
 	
 
@@ -33,11 +37,6 @@
 	function deleteReply(bno,rno){
 		location.href="/reply/delete/?bno="+bno+"&rno="+rno;
 	}
-	
-	 
-	 
-	 
-	 
 	
 	  
 </script>
@@ -78,7 +77,7 @@
 	</div>
 	<c:if test="${data.name==name||role=='admin'}">
 		<form method="post" action="/boardDelete">
-			<button type="submit" id="delete">게시물삭제</button>
+			<button type="submit" id="delete" onclick="deleteBtn()" >게시물삭제</button>
 			<input name="bo_no" value="${data.bo_no}" style="display:none"/>	
 		</form>
 		
@@ -86,9 +85,7 @@
 			<button type="submit" id="edit" >게시물수정</button>
 			<input name="bo_no" value="${data.bo_no}" style="display:none"/>	
 		</form>
-		
 
-		
 	</c:if>
 	
 	<br>

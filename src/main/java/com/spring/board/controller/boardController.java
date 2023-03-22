@@ -185,7 +185,6 @@ public class boardController {
 	
 	@RequestMapping(value = "fileDownload.do")
     public void fileDownload4(HttpServletRequest request,HttpServletResponse response) throws Exception {
-        //String path =  request.getSession().getServletContext().getRealPath("저장경로");
         
         String file_name =request.getParameter("file_name");
         String realFilename="";
@@ -211,9 +210,9 @@ public class boardController {
         }
          
         // 파일명 지정        
-        response.setContentType("application/octer-stream");
-        response.setHeader("Content-Transfer-Encoding", "binary;");
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + file_name + "\";");
+        response.setContentType("application/octer-stream"); //문서 타입의 종류
+        response.setHeader("Content-Transfer-Encoding", "binary;"); //전송데이터의 바디를 인코딩한방법을 표시
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + file_name + "\";"); //파일내용지정
         System.out.println(file_name);
         try {
             OutputStream os = response.getOutputStream();

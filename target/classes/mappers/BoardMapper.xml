@@ -76,22 +76,23 @@
 		  		,date,time
 		 from 
 		 	test.new_table
+		 where 1=1
 		 
 		 <if test='searchType.equals("title")'>
-		  WHERE title LIKE CONCAT('%', #{keyword}, '%')
+		  and title LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("content")'>
-		  WHERE content LIKE CONCAT('%', #{keyword}, '%')
+		  and content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("title_content")'>
-		  WHERE title LIKE CONCAT('%', #{keyword}, '%') 
+		  and title LIKE CONCAT('%', #{keyword}, '%') 
 		   or content LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 <if test='searchType.equals("writer")'>
-		  WHERE name LIKE CONCAT('%', #{keyword}, '%')
+		  and name LIKE CONCAT('%', #{keyword}, '%')
 		 </if>
 		 
 		 order by bo_no DESC

@@ -41,6 +41,7 @@
             <mvc:mapping path="/reply/**/"/>
             <mvc:mapping path="/user/**/"/>
             <mvc:mapping path="/listPage/**/"/>
+            <mvc:mapping path="/fileDownload.do"/>
             <beans:bean id="Intercepter" class="com.spring.board.intercepter.Intercepter"></beans:bean>
         </mvc:interceptor>
     </mvc:interceptors>
